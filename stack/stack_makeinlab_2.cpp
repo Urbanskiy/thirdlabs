@@ -130,4 +130,6 @@ int main()
     (*tmpfunc)(myStack);
     (*tmpfunc)(myStack);
     */
+   delete myStack;
+   return 0;
 }
