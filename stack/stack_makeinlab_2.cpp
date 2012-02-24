@@ -23,13 +23,19 @@ void Push(TStack * stack , int val, ... )
     int   * ptrArg = &val;              // ptrArg - pointer to first argument in func
     while((*ptrArg != __ARGS_END__ ) ){ // __ARGS_END__ macros that means end of argument list
         temp = stack->top;
-        stack->top = new node;          // allocate new memory for PUSHED value and top pointer
+        try
+        {
+            stack->top = new node;          // allocate new memory for PUSHED value and top pointer
 
-        if(stack->top == NULL)                                      //*****************************
-        {                                                           //
-            cout << "Stack cannot allocate new memory" << endl;     // Check if not reach NULL ptr
-        }                                                           //*****************************
-
+            if(stack->top == NULL)                                      //*****************************
+            {                                                           //
+                  throw "Stack cannot allocate new memory";             // Check if not reach NULL ptr
+            }                                                           //*****************************
+        }
+        catch(const char * exc)                         //
+        {                                               //
+            cout << exc << endl;                        //
+        } 
         stack->top->value = *ptrArg;    // PUSH stack current argument in arg list
         stack->top->prev = temp;
         ptrArg++;                       // ptrArg -> next argument
@@ -43,7 +49,7 @@ int Pop(TStack * stack)
         if(stack->top == NULL)                      //
         {                                           //
             throw "Error: Try to POP empty stack";  // Throw exception if trying to POP empty stack
-        }                                           //
+        }                                           // Good way to show that something wrong :)
     }                                               //
     catch(const char * exc)                         //
     {                                               //
